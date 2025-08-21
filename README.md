@@ -1,473 +1,274 @@
-# Claude Code PM
+# POE2Scout MCP Server - Professional Trading Intelligence
 
-[![Automaze](https://img.shields.io/badge/By-automaze.io-4b3baf)](https://automaze.io)
-&nbsp;
-[![Claude Code](https://img.shields.io/badge/+-Claude%20Code-d97757)](https://github.com/automazeio/ccpm/blob/main/README.md)
-[![GitHub Issues](https://img.shields.io/badge/+-GitHub%20Issues-1f2328)](https://github.com/automazeio/ccpm)
-&nbsp;
-[![MIT License](https://img.shields.io/badge/License-MIT-28a745)](https://github.com/automazeio/ccpm/blob/main/LICENSE)
-&nbsp;
-[![Follow on 𝕏](https://img.shields.io/badge/𝕏-@aroussi-1c9bf0)](http://x.com/intent/follow?screen_name=aroussi)
-&nbsp;
-[![Star this repo](https://img.shields.io/badge/★-Star%20this%20repo-e7b10b)](https://github.com/automazeio/ccpm)
+A Model Context Protocol (MCP) server that provides AI assistants with professional trading data from POE2Scout - a specialized platform for Path of Exile 2 currency trading and market intelligence. Built for traders, day traders, and currency speculators who need reliable market data and trend analysis.
 
-### Claude Code workflow to ship ~~faster~~ _better_ using spec-driven development, GitHub issues, Git worktrees, and mutiple AI agents running in parallel.
-
-Stop losing context. Stop blocking on tasks. Stop shipping bugs. This battle-tested system turns PRDs into epics, epics into GitHub issues, and issues into production code – with full traceability at every step.
-
-![Claude Code PM](screenshot.webp)
-
-## Table of Contents
-
-- [Background](#background)
-- [The Workflow](#the-workflow)
-- [What Makes This Different?](#what-makes-this-different)
-- [Why GitHub Issues?](#why-github-issues)
-- [Core Principle: No Vibe Coding](#core-principle-no-vibe-coding)
-- [System Architecture](#system-architecture)
-- [Workflow Phases](#workflow-phases)
-- [Command Reference](#command-reference)
-- [The Parallel Execution System](#the-parallel-execution-system)
-- [Key Features & Benefits](#key-features--benefits)
-- [Proven Results](#proven-results)
-- [Example Flow](#example-flow)
-- [Get Started Now](#get-started-now)
-- [Local vs Remote](#local-vs-remote)
-- [Technical Notes](#technical-notes)
-- [Support This Project](#support-this-project)
-
-## Background
-
-Every team struggles with the same problems:
-- **Context evaporates** between sessions, forcing constant re-discovery
-- **Parallel work creates conflicts** when multiple developers touch the same code
-- **Requirements drift** as verbal decisions override written specs
-- **Progress becomes invisible** until the very end
-
-This system solves all of that.
-
-## The Workflow
+## Architecture Overview
 
 ```mermaid
 graph LR
-    A[PRD Creation] --> B[Epic Planning]
-    B --> C[Task Decomposition]
-    C --> D[GitHub Sync]
-    D --> E[Parallel Execution]
+    A[POE2Scout API<br/>poe2scout.com] -->|HTTP Requests<br/>Rate Limited: 2/sec| B[POE2Scout MCP Server<br/>This Project]
+    B -->|11 Trading Tools<br/>JSON-RPC 2.0| C[Claude Code / LLM<br/>Your AI Application]
+    C -.->|Optional Extension<br/>API Integration| D[Custom Trading Bot<br/>Dashboard/Automation]
+    
+    B1[Multi-tier Cache<br/>L1: Memory<br/>L2: SQLite] -.->|Performance| B
+    B2[Rate Limiter<br/>Circuit Breaker<br/>Retry Logic] -.->|Reliability| B
+    
+    style A fill:#ff6b6b,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#4ecdc4,stroke:#fff,stroke-width:3px,color:#000
+    style C fill:#45b7d1,stroke:#fff,stroke-width:3px,color:#fff
+    style D fill:#96ceb4,stroke:#fff,stroke-width:2px,color:#000
+    style B1 fill:#feca57,stroke:#fff,stroke-width:1px,color:#000
+    style B2 fill:#ff9ff3,stroke:#fff,stroke-width:1px,color:#000
 ```
 
-### See It In Action (60 seconds)
+**Data Flow:**
+1. **POE2Scout API** → Raw market data (Divine Orbs, Chaos Orbs, etc.)
+2. **MCP Server** → Processes, caches, and exposes 11 trading tools  
+3. **Claude Code/LLM** → **YOUR PRIMARY APPLICATION** - Provides intelligent trading analysis
+4. **Custom Extensions** → Optional bots/dashboards that integrate with Claude's analysis
+
+## What This MCP Server Provides
+
+### 🎯 **Reliable Data Pipeline**
+- **11 focused tools** for direct POE2Scout API access
+- **Rate-limited HTTP client** (2 req/sec, burst 5) with intelligent retry logic
+- **Real-time market data** with proper error handling and caching
+- **JSON-RPC 2.0 compliance** for seamless AI integration
+
+### 📊 **Trading-Focused Data Coverage**
+- **Major currencies only** - Divine Orb, Chaos Orb, and other high-volume items
+- **Volume-based pricing** - Trade quantities for liquidity assessment
+- **Price history with trends** - Essential for day trading decisions
+- **Outlier detection** - Automatically flags market manipulation attempts
+- **Professional trader tools** - Built for currency speculation, not casual gear shopping
+
+## Available Tools
+
+POE2Scout MCP provides 11 specialized tools for currency trading and market analysis:
+
+### 🎯 **Core Trading Tools**
+- **`analyze_price_history`** - Advanced market analysis with trend detection, volatility assessment, and trading signals
+- **`get_leagues`** - Current league data with Divine Orb pricing
+- **`basic_search`** - Find currency items by name with price history
+- **`get_currency_items`** - Major currency exchange rates and volume data
+
+### 📊 **Market Intelligence Tools**  
+- **`get_unique_items`** - High-value unique item discovery (limited data coverage)
+- **`get_item_categories`** - Available trading categories
+- **`get_unique_base_items`** - Base item reference data
+- **`get_uniques_by_base_name`** - Filter unique items by base type
+
+### ⚙️ **System & Utility Tools**
+- **`get_api_status`** - Rate limiting and system health monitoring
+- **`get_item_filters`** - Available search filters and categories
+- **`get_landing_splash_info`** - Platform status and featured content
+
+**Key Limitation**: POE2Scout focuses on high-volume traded items only. Most specific gear searches return empty results - this is normal and expected.
+
+## Professional Trading Applications
+
+### 📊 **Smart Trading Analysis**
+```
+👤 User: Should I buy Divine Orbs at 2000 chaos right now?
+
+🤖 POE2 AI: Let me analyze Divine Orb market conditions...
+         [MCP call: analyze_price_history → comprehensive analysis]
+         
+         📈 MARKET ANALYSIS:
+         • Current Price: 2,000 chaos
+         • Trend: Stable/Flat (low volatility)
+         • Volume: 4,966 quantity (high liquidity)
+         • Recommendation: Fair Value - Hold/Neutral
+         
+         💡 TRADING SIGNAL: NEUTRAL
+         ✅ Safe to buy at current prices
+         📊 Consider dollar-cost averaging for large purchases
+```
+
+### 🎯 **Professional Currency Strategy**  
+```
+👤 User: I have 5,000 chaos - what's the smartest trading strategy?
+
+🤖 POE2 AI: Based on current market conditions:
+         
+         💰 PORTFOLIO ALLOCATION:
+         • 80% Divines (4,000 chaos) → Stability & high liquidity
+         • 20% Chaos (1,000 chaos) → Trading opportunities
+         
+         📊 RATIONALE:
+         • Divine volume: 4,966 quantity = easy exit
+         • Stable store of value for large holdings
+```
+
+### 🔍 **Volume-Based Intelligence**
+```
+👤 User: Divine Orb shows 4,966 quantity - what does that mean?
+
+🤖 POE2 AI: High-volume trading intelligence:
+         • 4,966 quantity = ~9,932,000 chaos worth of trading
+         • High liquidity = easy to buy/sell at market price
+         • Fast execution - won't wait long for buyers/sellers
+         
+         📊 VOLUME GUIDE:
+         🔥 HIGH (1000+): Safe for large trades
+         ⚠️ LOW (<100): Price manipulation risk
+         ❌ ZERO: No real market exists
+```
+
+### 📊 **Market Anomaly Detection**
+```
+👤 User: I'm seeing weird Chaos Orb data showing 18,000 in the price history - what's happening?
+
+🤖 POE2 AI: Let me analyze that anomaly in our market data...
+         [MCP call: basic_search → "chaos" shows price history with outliers]
+         
+         🚨 DATA ANOMALY DETECTED!
+         📊 Normal Chaos Orb price: 2 chaos (consistent baseline)  
+         📈 Anomaly spike: 18,000 chaos value recorded (9000x normal!)
+         📊 Trading pattern: 2 chaos (quantity: 14), then 18,000 spike (quantity: 45)
+         
+         🎯 ANALYSIS: 
+         • Likely API data error or reporting glitch
+         • 123 chaos spike also detected in history
+         • Normal trading continues at 2 chaos baseline
+         
+         💡 INSIGHT: This shows why volume matters
+         ✅ Trust: 2 chaos price with consistent 14+ quantity
+         ❌ Ignore: Outlier spikes with unusual patterns
+```
+
+### ⚡ **Professional Trade Validation**
+```
+👤 User: Someone wants to trade 1 Divine for 1800 Chaos - fair deal?
+
+🤖 POE2 AI: Let me analyze this against current market data...
+         [MCP call: Divine Orb shows 2000c current, 4,966 volume, price history]
+         
+         💚 EXCELLENT DEAL FOR YOU!
+         📊 Market rate: 2000 chaos per Divine (high volume confirms accuracy)
+         💰 Discount: 200 chaos (10% below market)
+         📈 Recent range: 1800-2100 chaos (you're at the low end)
+         🔥 Volume: 4,966 quantity traded = liquid market
+         
+         ✅ RECOMMENDATION: Accept immediately!
+         💡 Likely reasons: Quick liquidation, prefers chaos liquidity
+
+👤 User: Should I accept this deal immediately or negotiate?
+
+🤖 POE2 AI: With high-volume market data supporting 2000 chaos:
+         ⚡ ACCEPT IMMEDIATELY - This is below market rate
+         📊 High volume (4,966) means you can easily find market-rate trades
+         💡 This trader is giving you a 10% discount for quick liquidity
+         🎯 No need to negotiate when you're already getting a deal
+```
+
+### 💱 **Professional Currency Conversion**
+```
+👤 User: I want to convert 1,000 chaos into more stable holdings. What's the best approach?
+
+🤖 POE2 AI: Smart liquidity management question! Let me analyze...
+         [MCP call: analyze_price_history for major currencies]
+         
+         📊 CONVERSION ANALYSIS:
+         
+         💰 Current Options:
+         • 1,000 chaos → 0.5 Divine Orbs (2000c each)
+         • Volume check: Divine shows 4,966 quantity (extremely liquid)
+         • Risk level: LOW (stable price history)
+         
+         🎯 PROFESSIONAL RECOMMENDATION:
+         ✅ Convert 50% (500 chaos → 0.25 Divine) for stability  
+         ✅ Keep 50% (500 chaos) for trading flexibility
+         
+         📈 RATIONALE:
+         • Divine: Store of value, easy to liquidate (high volume)
+         • Chaos: Needed for smaller trades and opportunities
+         • Balanced approach reduces risk while maintaining flexibility
+
+👤 User: What about timing the market?
+
+🤖 POE2 AI: Volume-based timing strategy:
+         📊 HIGH VOLUME periods (4000+ quantity) = good liquidity for large moves
+         📈 STABLE PRICING periods = safe conversion times  
+         ⚠️ LOW VOLUME periods = wait for better liquidity
+         💡 RULE: Convert during high-volume, stable price periods
+```
+
+### 🎓 **Currency Management for New Traders**
+```
+👤 User: I'm new to trading and have 500 chaos. How should I manage this?
+
+🤖 POE2 AI: Smart starting position! Let me show you currency management...
+         [MCP call: get_currency_items for major currencies]
+         
+         💰 CURRENCY STRATEGY FOR 500 CHAOS:
+         
+         ❌ MISTAKE: Trying to buy specific gear (POE2Scout doesn't track most items)
+         ✅ SMART MOVE: Focus on currency portfolio management
+         
+         🎯 RECOMMENDED ALLOCATION:
+         • Keep 400 chaos liquid (80%) for trading opportunities
+         • Consider 0.25 Divine Orb position (100 chaos) for stability
+         • Reason: Divine = stable store of value, Chaos = trading flexibility
+         
+         📊 LEARN THE MARKET:
+         • Divine Orb: 2000 chaos (high volume = liquid)
+         • Track volume patterns to understand market depth
+         • Avoid items with zero volume (no real market)
+
+👤 User: Should I try to flip currencies?
+
+🤖 POE2 AI: With 500 chaos, focus on learning first:
+         📚 EDUCATION PHASE: Study price patterns before risking capital
+         📊 SMALL TESTS: Try 50-100 chaos positions to learn
+         ⚠️ AVOID: Large positions until you understand volume/volatility
+         🎯 GOAL: Build trading experience, not immediate profits
+```
+
+## Installation & Setup
 
 ```bash
-# Create a comprehensive PRD through guided brainstorming
-/pm:prd-new memory-system
-
-# Transform PRD into a technical epic with task breakdown
-/pm:prd-parse memory-system
-
-# Push to GitHub and start parallel execution
-/pm:epic-oneshot memory-system
-/pm:issue-start 1235
+# Clone and build
+git clone https://github.com/vanzan01/poe2scout-mcp.git
+cd poe2scout-mcp
+npm install
+npm run build
 ```
 
-## What Makes This Different?
+## Integration Examples
 
-| Traditional Development | Claude Code PM System |
-|------------------------|----------------------|
-| Context lost between sessions | **Persistent context** across all work |
-| Serial task execution | **Parallel agents** on independent tasks |
-| "Vibe coding" from memory | **Spec-driven** with full traceability |
-| Progress hidden in branches | **Transparent audit trail** in GitHub |
-| Manual task coordination | **Intelligent prioritization** with `/pm:next` |
-
-## Why GitHub Issues?
-
-Most Claude Code workflows operate in isolation – a single developer working with AI in their local environment. This creates a fundamental problem: **AI-assisted development becomes a silo**.
-
-By using GitHub Issues as our database, we unlock something powerful:
-
-### 🤝 **True Team Collaboration**
-- Multiple Claude instances can work on the same project simultaneously
-- Human developers see AI progress in real-time through issue comments
-- Team members can jump in anywhere – the context is always visible
-- Managers get transparency without interrupting flow
-
-### 🔄 **Seamless Human-AI Handoffs**
-- AI can start a task, human can finish it (or vice versa)
-- Progress updates are visible to everyone, not trapped in chat logs
-- Code reviews happen naturally through PR comments
-- No "what did the AI do?" meetings
-
-### 📈 **Scalable Beyond Solo Work**
-- Add team members without onboarding friction
-- Multiple AI agents working in parallel on different issues
-- Distributed teams stay synchronized automatically
-- Works with existing GitHub workflows and tools
-
-### 🎯 **Single Source of Truth**
-- No separate databases or project management tools
-- Issue state is the project state
-- Comments are the audit trail
-- Labels provide organization
-
-This isn't just a project management system – it's a **collaboration protocol** that lets humans and AI agents work together at scale, using infrastructure your team already trusts.
-
-## Core Principle: No Vibe Coding
-
-> **Every line of code must trace back to a specification.**
-
-We follow a strict 5-phase discipline:
-
-1. **🧠 Brainstorm** - Think deeper than comfortable
-2. **📝 Document** - Write specs that leave nothing to interpretation
-3. **📐 Plan** - Architect with explicit technical decisions
-4. **⚡ Execute** - Build exactly what was specified
-5. **📊 Track** - Maintain transparent progress at every step
-
-No shortcuts. No assumptions. No regrets.
-
-## System Architecture
-
-```
-.claude/
-├── CLAUDE.md          # Always-on instructions (copy content to your project's CLAUDE.md file)
-├── agents/            # Task-oriented agents (for context preservation)
-├── commands/          # Command definitions
-│   ├── context/       # Create, update, and prime context
-│   ├── pm/            # ← Project management commands (this system)
-│   └── testing/       # Prime and execute tests (edit this)
-├── context/           # Project-wide context files
-├── epics/             # ← PM's local workspace (place in .gitignore)
-│   └── [epic-name]/   # Epic and related tasks
-│       ├── epic.md    # Implementation plan
-│       ├── [#].md     # Individual task files
-│       └── updates/   # Work-in-progress updates
-├── prds/              # ← PM's PRD files
-├── rules/             # Place any rule files you'd like to reference here
-└── scripts/           # Place any script files you'd like to use here
-```
-
-## Workflow Phases
-
-### 1. Product Planning Phase
-
+### Claude Code (Recommended)
 ```bash
-/pm:prd-new feature-name
+# The -e flag passes the email directly to MCP - no separate export needed!
+claude mcp add -e POE2SCOUT_CONTACT_EMAIL=your@email.com -- poe2scout-mcp node /path/to/dist/index.js
 ```
-Launches comprehensive brainstorming to create a Product Requirements Document capturing vision, user stories, success criteria, and constraints.
 
-**Output:** `.claude/prds/feature-name.md`
-
-### 2. Implementation Planning Phase
-
+### Manual/Development Usage
 ```bash
-/pm:prd-parse feature-name
-```
-Transforms PRD into a technical implementation plan with architectural decisions, technical approach, and dependency mapping.
+# Only needed if running outside Claude Code
+export POE2SCOUT_CONTACT_EMAIL="your-email@example.com"
 
-**Output:** `.claude/epics/feature-name/epic.md`
-
-### 3. Task Decomposition Phase
-
-```bash
-/pm:epic-decompose feature-name
-```
-Breaks epic into concrete, actionable tasks with acceptance criteria, effort estimates, and parallelization flags.
-
-**Output:** `.claude/epics/feature-name/[task].md`
-
-### 4. GitHub Synchronization
-
-```bash
-/pm:epic-sync feature-name
-# Or for confident workflows:
-/pm:epic-oneshot feature-name
-```
-Pushes epic and tasks to GitHub as issues with appropriate labels and relationships.
-
-### 5. Execution Phase
-
-```bash
-/pm:issue-start 1234  # Launch specialized agent
-/pm:issue-sync 1234   # Push progress updates
-/pm:next             # Get next priority task
-```
-Specialized agents implement tasks while maintaining progress updates and an audit trail.
-
-## Command Reference
-
-> [!TIP]
-> Type `/pm:help` for a concise command summary
-
-### Initial Setup
-- `/pm:init` - Install dependencies and configure GitHub
-
-### PRD Commands
-- `/pm:prd-new` - Launch brainstorming for new product requirement
-- `/pm:prd-parse` - Convert PRD to implementation epic
-- `/pm:prd-list` - List all PRDs
-- `/pm:prd-edit` - Edit existing PRD
-- `/pm:prd-status` - Show PRD implementation status
-
-### Epic Commands
-- `/pm:epic-decompose` - Break epic into task files
-- `/pm:epic-sync` - Push epic and tasks to GitHub
-- `/pm:epic-oneshot` - Decompose and sync in one command
-- `/pm:epic-list` - List all epics
-- `/pm:epic-show` - Display epic and its tasks
-- `/pm:epic-close` - Mark epic as complete
-- `/pm:epic-edit` - Edit epic details
-- `/pm:epic-refresh` - Update epic progress from tasks
-
-### Issue Commands
-- `/pm:issue-show` - Display issue and sub-issues
-- `/pm:issue-status` - Check issue status
-- `/pm:issue-start` - Begin work with specialized agent
-- `/pm:issue-sync` - Push updates to GitHub
-- `/pm:issue-close` - Mark issue as complete
-- `/pm:issue-reopen` - Reopen closed issue
-- `/pm:issue-edit` - Edit issue details
-
-### Workflow Commands
-- `/pm:next` - Show next priority issue with epic context
-- `/pm:status` - Overall project dashboard
-- `/pm:standup` - Daily standup report
-- `/pm:blocked` - Show blocked tasks
-- `/pm:in-progress` - List work in progress
-
-### Sync Commands
-- `/pm:sync` - Full bidirectional sync with GitHub
-- `/pm:import` - Import existing GitHub issues
-
-### Maintenance Commands
-- `/pm:validate` - Check system integrity
-- `/pm:clean` - Archive completed work
-- `/pm:search` - Search across all content
-
-## The Parallel Execution System
-
-### Issues Aren't Atomic
-
-Traditional thinking: One issue = One developer = One task
-
-**Reality: One issue = Multiple parallel work streams**
-
-A single "Implement user authentication" issue isn't one task. It's...
-
-- **Agent 1**: Database tables and migrations
-- **Agent 2**: Service layer and business logic
-- **Agent 3**: API endpoints and middleware
-- **Agent 4**: UI components and forms
-- **Agent 5**: Test suites and documentation
-
-All running **simultaneously** in the same worktree.
-
-### The Math of Velocity
-
-**Traditional Approach:**
-- Epic with 3 issues
-- Sequential execution
-
-**This System:**
-- Same epic with 3 issues
-- Each issue splits into ~4 parallel streams
-- **12 agents working simultaneously**
-
-We're not assigning agents to issues. We're **leveraging multiple agents** to ship faster.
-
-### Context Optimization
-
-**Traditional single-thread approach:**
-- Main conversation carries ALL the implementation details
-- Context window fills with database schemas, API code, UI components
-- Eventually hits context limits and loses coherence
-
-**Parallel agent approach:**
-- Main thread stays clean and strategic
-- Each agent handles its own context in isolation
-- Implementation details never pollute the main conversation
-- Main thread maintains oversight without drowning in code
-
-Your main conversation becomes the conductor, not the orchestra.
-
-### GitHub vs Local: Perfect Separation
-
-**What GitHub Sees:**
-- Clean, simple issues
-- Progress updates
-- Completion status
-
-**What Actually Happens Locally:**
-- Issue #1234 explodes into 5 parallel agents
-- Agents coordinate through Git commits
-- Complex orchestration hidden from view
-
-GitHub doesn't need to know HOW the work got done – just that it IS done.
-
-### The Command Flow
-
-```bash
-# Analyze what can be parallelized
-/pm:issue-analyze 1234
-
-# Launch the swarm
-/pm:epic-start memory-system
-
-# Watch the magic
-# 12 agents working across 3 issues
-# All in: ../epic-memory-system/
-
-# One clean merge when done
-/pm:epic-merge memory-system
+# Or create .env file
+echo "POE2SCOUT_CONTACT_EMAIL=your-email@example.com" > .env
 ```
 
-## Key Features & Benefits
 
-### 🧠 **Context Preservation**
-Never lose project state again. Each epic maintains its own context, agents read from `.claude/context/`, and updates locally before syncing.
+## Requirements
 
-### ⚡ **Parallel Execution**
-Ship faster with multiple agents working simultaneously. Tasks marked `parallel: true` enable conflict-free concurrent development.
+- **Node.js 18+**  
+- **TypeScript 5.9+**
+- **Internet connection** for POE2Scout API
+- **Valid email** for API compliance
 
-### 🔗 **GitHub Native**
-Works with tools your team already uses. Issues are the source of truth, comments provide history, and there is no dependency on the Projects API.
+## Acknowledgments
 
-### 🤖 **Agent Specialization**
-Right tool for every job. Different agents for UI, API, and database work. Each reads requirements and posts updates automatically.
+This MCP server connects to and relies on the excellent **POE2Scout** project:
 
-### 📊 **Full Traceability**
-Every decision is documented. PRD → Epic → Task → Issue → Code → Commit. Complete audit trail from idea to production.
+- **POE2Scout** - https://github.com/poe2scout/poe2scout  
+  The core trading platform and API that powers this MCP server. POE2Scout provides the market data, price history, and trading intelligence that makes professional POE2 currency analysis possible.
 
-### 🚀 **Developer Productivity**
-Focus on building, not managing. Intelligent prioritization, automatic context loading, and incremental sync when ready.
+Special thanks to the POE2Scout team for building and maintaining the infrastructure that enables AI-powered trading analysis for Path of Exile 2.
 
-## Proven Results
+## License
 
-Teams using this system report:
-- **89% less time** lost to context switching
-- **5-8 parallel tasks** vs 1 previously
-- **75% reduction** in bug rates
-- **3x faster** feature delivery
-
-## Example Flow
-
-```bash
-# Start a new feature
-/pm:prd-new memory-system
-
-# Review and refine the PRD...
-
-# Create implementation plan
-/pm:prd-parse memory-system
-
-# Review the epic...
-
-# Break into tasks and push to GitHub
-/pm:epic-oneshot memory-system
-# Creates issues: #1234 (epic), #1235, #1236 (tasks)
-
-# Start development on a task
-/pm:issue-start 1235
-# Agent begins work, maintains local progress
-
-# Sync progress to GitHub
-/pm:issue-sync 1235
-# Updates posted as issue comments
-
-# Check overall status
-/pm:epic-show memory-system
-```
-
-## Get Started Now
-
-### Quick Setup (2 minutes)
-
-1. **Clone this repository into your project**:
-   ```bash
-   cd path/to/your/project/
-   git clone https://github.com/automazeio/ccpm.git .
-   cd ccpm/
-   ```
-
-   > If you already have a `.claude` directory, clone this repository to a different directory and copy the contents of the cloned `.claude` directory to your project's `.claude` directory.
-
-2. **Initialize the PM system**:
-   ```bash
-   /pm:init
-   ```
-   This command will:
-   - Install GitHub CLI (if needed)
-   - Authenticate with GitHub
-   - Install [gh-sub-issue extension](https://github.com/yahsan2/gh-sub-issue) for proper parent-child relationships
-   - Create required directories
-   - Update .gitignore
-
-3. **Create `CLAUDE.md`** with your repository information
-   ```bash
-   /init include rules from .claude/CLAUDE.md
-   ```
-   > If you already have a `CLAUDE.md` file, run: `/re-init` to update it with important rules from `.claude/CLAUDE.md`.
-
-4. **Prime the system**:
-   ```bash
-   /context:create
-   ```
-
-
-
-### Start Your First Feature
-
-```bash
-/pm:prd-new your-feature-name
-```
-
-Watch as structured planning transforms into shipped code.
-
-## Local vs Remote
-
-| Operation | Local | GitHub |
-|-----------|-------|--------|
-| PRD Creation | ✅ | — |
-| Implementation Planning | ✅ | — |
-| Task Breakdown | ✅ | ✅ (sync) |
-| Execution | ✅ | — |
-| Status Updates | ✅ | ✅ (sync) |
-| Final Deliverables | — | ✅ |
-
-## Technical Notes
-
-### GitHub Integration
-- Uses **gh-sub-issue extension** for proper parent-child relationships
-- Falls back to task lists if extension not installed
-- Epic issues track sub-task completion automatically
-- Labels provide additional organization (`epic:feature`, `task:feature`)
-
-### File Naming Convention
-- Tasks start as `001.md`, `002.md` during decomposition
-- After GitHub sync, renamed to `{issue-id}.md` (e.g., `1234.md`)
-- Makes it easy to navigate: issue #1234 = file `1234.md`
-
-### Design Decisions
-- Intentionally avoids GitHub Projects API complexity
-- All commands operate on local files first for speed
-- Synchronization with GitHub is explicit and controlled
-- Worktrees provide clean git isolation for parallel work
-- GitHub Projects can be added separately for visualization
-
----
-
-## Support This Project
-
-Claude Code PM was developed at [Automaze](https://automaze.io) **for developers who ship, by developers who ship**.
-
-If Claude Code PM helps your team ship better software:
-
-- ⭐ **[Star this repository](https://github.com/your-username/claude-code-pm)** to show your support
-- 🐦 **[Follow @aroussi on X](https://x.com/aroussi)** for updates and tips
-
-
----
-
-> [!TIP]
-> **Ship faster with Automaze.** We partner with founders to bring their vision to life, scale their business, and optimize for success.
-> **[Visit Automaze to book a call with me ›](https://automaze.io)**
+MIT License
