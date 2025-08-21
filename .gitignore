@@ -71,5 +71,5 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Claude Code PM epics (if present)
-.claude/epics/
+# Claude Code directory
+.claude/
