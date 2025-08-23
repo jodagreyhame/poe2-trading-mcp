@@ -69,206 +69,199 @@ POE2Scout MCP provides 11 specialized tools for currency trading and market anal
 
 ### 📊 **Smart Trading Analysis**
 ```
-👤 User: Should I buy Divine Orbs at 2000 chaos right now?
+👤 User: Should I buy Divine Orbs at current market price?
 
 🤖 POE2 AI: Let me analyze Divine Orb market conditions...
          [MCP call: analyze_price_history → comprehensive analysis]
          
          📈 MARKET ANALYSIS:
-         • Current Price: 2,000 chaos
-         • Trend: Stable/Flat (low volatility)
-         • Volume: 4,966 quantity (high liquidity)
-         • Recommendation: Fair Value - Hold/Neutral
+         • Current Price: [Current market rate]
+         • Trend: Stable/Flat (medium volatility)
+         • Volume: 302 quantity (excellent liquidity)
+         • Recommendation: Sell - 13.8% above average
          
-         💡 TRADING SIGNAL: NEUTRAL
-         ✅ Safe to buy at current prices
-         📊 Consider dollar-cost averaging for large purchases
+         💡 TRADING SIGNAL: WEAK SELL
+         ⚠️ Price slightly elevated - consider waiting for dip
+         📊 Recent range: [Dynamic price range]
 ```
 
 ### 🎯 **Professional Currency Strategy**  
 ```
-👤 User: I have 5,000 chaos - what's the smartest trading strategy?
+👤 User: I have 3 Divine Orbs - what's the smartest trading strategy?
 
-🤖 POE2 AI: Based on current market conditions:
+🤖 POE2 AI: Let me analyze current market conditions first...
+         [MCP call: get_currency_items → market analysis]
          
-         💰 PORTFOLIO ALLOCATION:
-         • 80% Divines (4,000 chaos) → Stability & high liquidity
-         • 20% Chaos (1,000 chaos) → Trading opportunities
+         💰 STRATEGY ANALYSIS:
+         • Divine stability: [Current volatility assessment]
+         • Alternative currencies: [High-value options analysis] 
+         • Market timing: [League phase considerations]
          
-         📊 RATIONALE:
-         • Divine volume: 4,966 quantity = easy exit
-         • Stable store of value for large holdings
+         📊 METHODOLOGY:
+         • Assess your gear upgrade timeline
+         • Compare Divine vs other currency stability  
+         • Factor in league age and market maturity
+         • Keep emergency reserves for opportunities
 ```
 
 ### 🔍 **Volume-Based Intelligence**
 ```
-👤 User: Divine Orb shows 4,966 quantity - what does that mean?
+👤 User: Divine Orb shows 302 quantity - is that good liquidity?
 
-🤖 POE2 AI: High-volume trading intelligence:
-         • 4,966 quantity = ~9,932,000 chaos worth of trading
-         • High liquidity = easy to buy/sell at market price
-         • Fast execution - won't wait long for buyers/sellers
+🤖 POE2 AI: Moderate liquidity analysis:
+         • 302 quantity = [Market value worth of trading]
+         • Previous volume: 5,012 (significant drop)
+         • Execution: May take time for large trades
          
          📊 VOLUME GUIDE:
-         🔥 HIGH (1000+): Safe for large trades
+         🔥 HIGH (1000+): Instant execution
+         ✅ MEDIUM (100-999): Normal trading
          ⚠️ LOW (<100): Price manipulation risk
-         ❌ ZERO: No real market exists
 ```
 
-### 📊 **Market Anomaly Detection**
+### 📊 **Arbitrage Opportunities**
 ```
-👤 User: I'm seeing weird Chaos Orb data showing 18,000 in the price history - what's happening?
+👤 User: Find arbitrage between leagues
 
-🤖 POE2 AI: Let me analyze that anomaly in our market data...
-         [MCP call: basic_search → "chaos" shows price history with outliers]
+🤖 POE2 AI: Cross-league price analysis:
          
-         🚨 DATA ANOMALY DETECTED!
-         📊 Normal Chaos Orb price: 2 chaos (consistent baseline)  
-         📈 Anomaly spike: 18,000 chaos value recorded (9000x normal!)
-         📊 Trading pattern: 2 chaos (quantity: 14), then 18,000 spike (quantity: 45)
+         💎 DIVINE ORB ARBITRAGE:
+         • Dawn of the Hunt: [Current SC price]
+         • HC Dawn of the Hunt: [Current HC price]
+         • Spread: [Price difference] ([% difference])
          
-         🎯 ANALYSIS: 
-         • Likely API data error or reporting glitch
-         • 123 chaos spike also detected in history
-         • Normal trading continues at 2 chaos baseline
-         
-         💡 INSIGHT: This shows why volume matters
-         ✅ Trust: 2 chaos price with consistent 14+ quantity
-         ❌ Ignore: Outlier spikes with unusual patterns
+         📊 ANALYSIS:
+         • Hardcore economy typically smaller
+         • Can't transfer between leagues
+         • Shows relative economy health
 ```
 
-### ⚡ **Professional Trade Validation**
+### ⚡ **Price Manipulation Detection**
 ```
-👤 User: Someone wants to trade 1 Divine for 1800 Chaos - fair deal?
+👤 User: [Currency] just spiked massively - is this real?
 
-🤖 POE2 AI: Let me analyze this against current market data...
-         [MCP call: Divine Orb shows 2000c current, 4,966 volume, price history]
+🤖 POE2 AI: Market manipulation analysis:
          
-         💚 EXCELLENT DEAL FOR YOU!
-         📊 Market rate: 2000 chaos per Divine (high volume confirms accuracy)
-         💰 Discount: 200 chaos (10% below market)
-         📈 Recent range: 1800-2100 chaos (you're at the low end)
-         🔥 Volume: 4,966 quantity traded = liquid market
+         🚨 PRICE SPIKE ANALYSIS:
+         • Current: [Spike price] (massive increase!)
+         • Previous: [Normal range] (historical average)
+         • Volume: [Current volume] (check if artificial)
          
-         ✅ RECOMMENDATION: Accept immediately!
-         💡 Likely reasons: Quick liquidation, prefers chaos liquidity
-
-👤 User: Should I accept this deal immediately or negotiate?
-
-🤖 POE2 AI: With high-volume market data supporting 2000 chaos:
-         ⚡ ACCEPT IMMEDIATELY - This is below market rate
-         📊 High volume (4,966) means you can easily find market-rate trades
-         💡 This trader is giving you a 10% discount for quick liquidity
-         🎯 No need to negotiate when you're already getting a deal
+         💡 VERDICT: [Analysis based on volume/history]
+         ⚠️ Compare with historical patterns
+         📊 Historical range: [Dynamic range]
 ```
 
-### 💱 **Professional Currency Conversion**
+### 💰 **Quick Trade Validation**
 ```
-👤 User: I want to convert 1,000 chaos into more stable holdings. What's the best approach?
+👤 User: Someone offers [X] for [Y currency] - fair deal?
 
-🤖 POE2 AI: Smart liquidity management question! Let me analyze...
-         [MCP call: analyze_price_history for major currencies]
+🤖 POE2 AI: Trade analysis:
          
-         📊 CONVERSION ANALYSIS:
+         [DEAL ASSESSMENT]
+         📊 Current market rate: [Live market rate]
+         💰 Price difference: [Above/below market %]
+         📈 Recent range: [Dynamic price range]
          
-         💰 Current Options:
-         • 1,000 chaos → 0.5 Divine Orbs (2000c each)
-         • Volume check: Divine shows 4,966 quantity (extremely liquid)
-         • Risk level: LOW (stable price history)
-         
-         🎯 PROFESSIONAL RECOMMENDATION:
-         ✅ Convert 50% (500 chaos → 0.25 Divine) for stability  
-         ✅ Keep 50% (500 chaos) for trading flexibility
-         
-         📈 RATIONALE:
-         • Divine: Store of value, easy to liquidate (high volume)
-         • Chaos: Needed for smaller trades and opportunities
-         • Balanced approach reduces risk while maintaining flexibility
-
-👤 User: What about timing the market?
-
-🤖 POE2 AI: Volume-based timing strategy:
-         📊 HIGH VOLUME periods (4000+ quantity) = good liquidity for large moves
-         📈 STABLE PRICING periods = safe conversion times  
-         ⚠️ LOW VOLUME periods = wait for better liquidity
-         💡 RULE: Convert during high-volume, stable price periods
+         🎯 RECOMMENDATION: [Based on current analysis]
 ```
 
-### 🎓 **Currency Management for New Traders**
+## Real Trading Scenarios
+
+### **Beginner: "What's Exalted worth?"**
 ```
-👤 User: I'm new to trading and have 500 chaos. How should I manage this?
-
-🤖 POE2 AI: Smart starting position! Let me show you currency management...
-         [MCP call: get_currency_items for major currencies]
-         
-         💰 CURRENCY STRATEGY FOR 500 CHAOS:
-         
-         ❌ MISTAKE: Trying to buy specific gear (POE2Scout doesn't track most items)
-         ✅ SMART MOVE: Focus on currency portfolio management
-         
-         🎯 RECOMMENDED ALLOCATION:
-         • Keep 400 chaos liquid (80%) for trading opportunities
-         • Consider 0.25 Divine Orb position (100 chaos) for stability
-         • Reason: Divine = stable store of value, Chaos = trading flexibility
-         
-         📊 LEARN THE MARKET:
-         • Divine Orb: 2000 chaos (high volume = liquid)
-         • Track volume patterns to understand market depth
-         • Avoid items with zero volume (no real market)
-
-👤 User: Should I try to flip currencies?
-
-🤖 POE2 AI: With 500 chaos, focus on learning first:
-         📚 EDUCATION PHASE: Study price patterns before risking capital
-         📊 SMALL TESTS: Try 50-100 chaos positions to learn
-         ⚠️ AVOID: Large positions until you understand volume/volatility
-         🎯 GOAL: Build trading experience, not immediate profits
+Current Exalted Orb: 1 exalt (base unit)
+Stable baseline currency for all pricing
+Volume: High liquidity
+Status: Standard measurement unit
 ```
 
-## Installation & Setup
+### **Intermediate: "Best profit margins today?"**
+```
+🔥 HIGH-VALUE CURRENCIES:
+1. Divine Orb: [Current rate] (stable store of value)
+2. Perfect Jeweller's: [Current rate] (high-value)
+3. Greater Jeweller's: [Current rate] (watch for spikes)
 
+⚠️ Check volumes before trading!
+```
+
+### **Advanced: "Portfolio rebalancing methodology?"**
+```
+CURRENT HOLDINGS: 8 Divine Orbs (typical geared endgamer)
+
+ANALYSIS FRAMEWORK:
+• Market phase: [Early league vs established economy]
+• Currency stability: [Volatility vs other options]
+• Personal timeline: [Gear upgrade plans vs investment horizon]
+
+METHODOLOGY: 
+• Calculate gear upgrade costs in current market
+• Assess opportunity cost of holding vs trading
+• Diversify based on market conditions, not fixed ratios
+• Adjust allocation based on league maturity and goals
+```
+
+## Installation
+
+### For Claude Desktop Users
 ```bash
-# Clone and build
+# Add to Claude with email configuration
+claude mcp add -e POE2SCOUT_CONTACT_EMAIL=your@email.com -- poe2scout-mcp node /path/to/dist/index.js
+```
+
+### For Developers
+```bash
 git clone https://github.com/vanzan01/poe2scout-mcp.git
 cd poe2scout-mcp
 npm install
 npm run build
+
+# Set email (required by API)
+export POE2SCOUT_CONTACT_EMAIL="your@email.com"
 ```
 
-## Integration Examples
+## Troubleshooting
 
-### Claude Code (Recommended)
-```bash
-# The -e flag passes the email directly to MCP - no separate export needed!
-claude mcp add -e POE2SCOUT_CONTACT_EMAIL=your@email.com -- poe2scout-mcp node /path/to/dist/index.js
-```
+### **"Prices look completely wrong"**
+- Check the volume/quantity - low volume = unreliable price
+- Trust high-volume items only (100+ quantity)
+- Some currencies show data anomalies - focus on consistent patterns
 
-### Manual/Development Usage
-```bash
-# Only needed if running outside Claude Code
-export POE2SCOUT_CONTACT_EMAIL="your-email@example.com"
+### **"All unique item searches return empty"**
+- Normal behavior - POE2Scout focuses on currency trading
+- Limited unique item coverage
+- Use official trade site for gear
 
-# Or create .env file
-echo "POE2SCOUT_CONTACT_EMAIL=your-email@example.com" > .env
-```
+### **"Divine price changed drastically"**
+- Check both price AND volume
+- Volume drops = temporary liquidity issue  
+- Wait for volume normalization before trading large amounts
 
+## Pro Trading Tips
 
-## Requirements
+1. **Always check volume** - Volume under 100 = price manipulation risk
+2. **Divine Orb is your benchmark** - Most stable high-value currency  
+3. **Exalted for baseline** - All prices measured in exalts
+4. **Perfect Jeweller's for storage** - High value, good liquidity
+5. **Cross-reference big trades** - Verify large value transactions
 
-- **Node.js 18+**  
-- **TypeScript 5.9+**
-- **Internet connection** for POE2Scout API
-- **Valid email** for API compliance
+## Data Quality Notes
 
-## Acknowledgments
+**✅ Reliable Data:**
+- Divine Orb pricing (consistently accurate)
+- Volume/quantity data (helps identify bad prices)  
+- Price history trends
 
-This MCP server connects to and relies on the excellent **POE2Scout** project:
+**⚠️ Known Issues:**
+- Some currencies show extreme price swings
+- Low volume items may have stale pricing
+- Not real-time (updates periodically)
 
-- **POE2Scout** - https://github.com/poe2scout/poe2scout  
-  The core trading platform and API that powers this MCP server. POE2Scout provides the market data, price history, and trading intelligence that makes professional POE2 currency analysis possible.
+## Credits
 
-Special thanks to the POE2Scout team for building and maintaining the infrastructure that enables AI-powered trading analysis for Path of Exile 2.
+Built on top of [POE2Scout](https://github.com/poe2scout/poe2scout) - the platform providing the trading data that makes this possible.
 
 ## License
 
-MIT License
+MIT

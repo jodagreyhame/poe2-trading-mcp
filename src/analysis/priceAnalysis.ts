@@ -3,7 +3,18 @@
  * 
  * Provides comprehensive price trend analysis, volatility calculation,
  * and trading signal generation for POE2 items.
+ * 
+ * All prices in the POE2Scout API are denominated in Exalted Orbs (base unit = 1 exalt).
  */
+
+export interface CurrencyContext {
+  priceInExalts: number;
+  equivalentChaos?: number;
+  equivalentDivine?: number;
+  displayString: string;
+  hasRealTimeRates: boolean;
+  ratesUsed?: { chaosRate?: number; divineRate?: number };
+}
 
 export interface PriceLog {
   price: number;
@@ -14,6 +25,7 @@ export interface PriceLog {
 export interface PriceAnalysisResult {
   item: string;
   currentPrice: number;
+  currencyContext: CurrencyContext;
   priceAnalysis: {
     trend: 'rising' | 'falling' | 'stable';
     trendDirection: 'up' | 'down' | 'flat';
@@ -45,13 +57,62 @@ export interface PriceAnalysisResult {
 }
 
 /**
+ * Creates currency context for a price in Exalted Orbs
+ * Only uses real-time rates from API - no fallback values
+ */
+function createCurrencyContext(
+  priceInExalts: number, 
+  realTimeRates?: { chaosRate?: number; divineRate?: number }
+): CurrencyContext {
+  const hasRealTimeRates = !!(realTimeRates?.chaosRate || realTimeRates?.divineRate);
+  
+  let equivalentChaos: number | undefined;
+  let equivalentDivine: number | undefined;
+  
+  if (realTimeRates?.chaosRate) {
+    equivalentChaos = priceInExalts / realTimeRates.chaosRate;
+  }
+  
+  if (realTimeRates?.divineRate) {
+    equivalentDivine = priceInExalts / realTimeRates.divineRate;
+  }
+
+  // Generate a readable display string
+  let displayString: string;
+  if (equivalentChaos !== undefined && realTimeRates!.chaosRate! <= priceInExalts) {
+    displayString = `${priceInExalts} exalts (~${equivalentChaos.toFixed(2)} chaos)`;
+  } else if (equivalentDivine !== undefined && realTimeRates!.divineRate! <= priceInExalts) {
+    displayString = `${priceInExalts} exalts (~${equivalentDivine.toFixed(2)} divine)`;
+  } else {
+    displayString = `${priceInExalts} exalts`;
+  }
+
+  if (!hasRealTimeRates) {
+    displayString += ' (no exchange rates available)';
+  }
+
+  const result: CurrencyContext = {
+    priceInExalts,
+    displayString,
+    hasRealTimeRates,
+  };
+
+  if (equivalentChaos !== undefined) result.equivalentChaos = equivalentChaos;
+  if (equivalentDivine !== undefined) result.equivalentDivine = equivalentDivine;
+  if (realTimeRates) result.ratesUsed = realTimeRates;
+
+  return result;
+}
+
+/**
  * Analyzes price history data and generates comprehensive market insights
  */
 export function analyzePriceHistory(
   itemName: string,
   currentPrice: number,
   priceLogs: (PriceLog | null)[],
-  _analysisType: 'trend' | 'volatility' | 'trading_signals' | 'comprehensive' = 'comprehensive'
+  _analysisType: 'trend' | 'volatility' | 'trading_signals' | 'comprehensive' = 'comprehensive',
+  realTimeRates?: { chaosRate?: number; divineRate?: number }
 ): PriceAnalysisResult {
   // Filter out null entries and sort by time (newest first)
   const validLogs = priceLogs
@@ -59,7 +120,7 @@ export function analyzePriceHistory(
     .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
 
   if (validLogs.length === 0) {
-    return createEmptyAnalysis(itemName, currentPrice);
+    return createEmptyAnalysis(itemName, currentPrice, realTimeRates);
   }
 
   // Extract price and volume data
@@ -85,6 +146,7 @@ export function analyzePriceHistory(
   return {
     item: itemName,
     currentPrice,
+    currencyContext: createCurrencyContext(currentPrice, realTimeRates),
     priceAnalysis: {
       trend: trend.direction,
       trendDirection: trend.direction === 'stable' ? 'flat' : (trend.direction === 'rising' ? 'up' : 'down'),
@@ -108,10 +170,15 @@ export function analyzePriceHistory(
   };
 }
 
-function createEmptyAnalysis(itemName: string, currentPrice: number): PriceAnalysisResult {
+function createEmptyAnalysis(
+  itemName: string, 
+  currentPrice: number, 
+  realTimeRates?: { chaosRate?: number; divineRate?: number }
+): PriceAnalysisResult {
   return {
     item: itemName,
     currentPrice,
+    currencyContext: createCurrencyContext(currentPrice, realTimeRates),
     priceAnalysis: {
       trend: 'stable',
       trendDirection: 'flat',
@@ -408,7 +475,7 @@ function generateInsights(
 
   // Outlier insight
   if (outlierInfo.detected && outlierInfo.price) {
-    insights.push(`Outlier price detected: ${outlierInfo.price} chaos (likely data anomaly)`);
+    insights.push(`Outlier price detected: ${outlierInfo.price} exalts (likely data anomaly)`);
   }
 
   return insights;

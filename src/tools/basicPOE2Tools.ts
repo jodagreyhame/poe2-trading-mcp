@@ -543,12 +543,45 @@ function createAnalyzePriceHistoryTool(client: POE2ScoutClient, logger: Logger):
         const priceLogs = (itemData as any).priceLogs || [];
         const itemText = (itemData as any).text || (itemData as any).name || itemName;
 
-        // Perform analysis
+        // Fetch real-time currency rates for context
+        let realTimeRates: { chaosRate?: number; divineRate?: number } = {};
+        try {
+          // Get current Chaos Orb price (if not analyzing Chaos itself)
+          if (itemText.toLowerCase() !== 'chaos orb') {
+            const chaosSearch = await client.getCurrencyItems('currency', {
+              search: 'Chaos Orb',
+              league,
+              limit: 1,
+            });
+            const chaosData = chaosSearch.items?.[0];
+            if (chaosData && (chaosData as any).currentPrice) {
+              realTimeRates.chaosRate = (chaosData as any).currentPrice;
+            }
+          }
+
+          // Get current Divine Orb price (if not analyzing Divine itself)
+          if (itemText.toLowerCase() !== 'divine orb') {
+            const divineSearch = await client.getCurrencyItems('currency', {
+              search: 'Divine Orb',
+              league,
+              limit: 1,
+            });
+            const divineData = divineSearch.items?.[0];
+            if (divineData && (divineData as any).currentPrice) {
+              realTimeRates.divineRate = (divineData as any).currentPrice;
+            }
+          }
+        } catch (error) {
+          logger.debug('Failed to fetch currency rates', { error });
+        }
+
+        // Perform analysis with real-time rates
         const analysis = analyzePriceHistory(
           itemText,
           currentPrice,
           priceLogs,
-          analysisType as any
+          analysisType as any,
+          realTimeRates
         );
 
         return {
