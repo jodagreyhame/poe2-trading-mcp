@@ -10,12 +10,15 @@ import { POE2ScoutClient } from '../api/client.js';
 import { ToolHandler } from '../server/toolRegistry.js';
 import { Logger } from '../utils/logger.js';
 import { analyzePriceHistory } from '../analysis/priceAnalysis.js';
+import { createPOE2OfficialTradeTools } from './poe2official_trade_search.js';
+import { createPOE2OfficialExchangeRatesTool } from './poe2official_exchange_rates.js';
+import { createPOE2OfficialBatchSearchTool } from './poe2official_batch_search.js';
 
 /**
  * Create basic POE2Scout tool handlers
  */
 export function createBasicPOE2ScoutTools(client: POE2ScoutClient, logger: Logger): ToolHandler[] {
-  return [
+  const poe2ScoutTools = [
     createGetLeaguesTool(client, logger),
     createGetItemCategoriesTool(client, logger),
     createGetUniqueItemsTool(client, logger),
@@ -30,6 +33,17 @@ export function createBasicPOE2ScoutTools(client: POE2ScoutClient, logger: Logge
     createBasicSearchTool(client, logger),
     createAnalyzePriceHistoryTool(client, logger),
   ];
+
+  // Add POE2Official trade tools
+  const poe2OfficialTools = createPOE2OfficialTradeTools(logger);
+  
+  // Add POE2Official exchange rates tool
+  const exchangeRatesTool = createPOE2OfficialExchangeRatesTool(logger);
+  
+  // Add POE2Official batch search tool
+  const batchSearchTool = createPOE2OfficialBatchSearchTool(logger);
+
+  return [...poe2ScoutTools, ...poe2OfficialTools, exchangeRatesTool, batchSearchTool];
 }
 
 /**
